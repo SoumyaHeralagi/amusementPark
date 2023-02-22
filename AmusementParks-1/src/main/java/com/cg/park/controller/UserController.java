@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class UserController {
 	private UserService uservice;
 
 	@GetMapping("/getAllUser")
+	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Object> getAllUser() throws UserNotFoundException {
 		List<UserRequest> userList = uservice.showAllUsers();
 		if (userList != null) {
@@ -35,6 +37,7 @@ public class UserController {
 	}
 
 	@GetMapping("/userbyid/{id}")
+	@PreAuthorize("hasAuthority('user')")
 	public ResponseEntity<Object> getUser(@PathVariable("id") Integer userId) throws UserNotFoundException {
 		boolean isUserExist = uservice.isUserExist(userId);
 		if (isUserExist) {
@@ -45,13 +48,14 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/postuser")
+	@PostMapping("/registration")
 	public ResponseEntity<Object> createUser(@RequestBody UserRequest userReq) {
 		uservice.addUser(userReq);
 		return new ResponseEntity<>("user created successfully", HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
+	@PreAuthorize("hasAuthority('user')")
 	public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Integer userId, @RequestBody UserRequest user)
 			throws UserNotFoundException {
 		boolean isUserExist = uservice.isUserExist(userId);
@@ -64,6 +68,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/delete/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") Integer userId) throws UserNotFoundException {
 		boolean isUserExist = uservice.isUserExist(userId);
 		if (isUserExist) {
@@ -79,5 +84,4 @@ public class UserController {
 		return uservice.checkLogin(name, password);
 	}
 
-	
 }

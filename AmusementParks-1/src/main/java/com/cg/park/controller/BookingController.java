@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.park.dto.Bookingdto;
 import com.cg.park.exception.BookingNotFoundException;
-import com.cg.park.model.Booking;
 import com.cg.park.service.BookingService;
 
 @RestController
@@ -27,6 +27,7 @@ public class BookingController {
 	private BookingService bservice;
 
 	@GetMapping("/getAllBooking")
+	//@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Object> getAllBooking() throws BookingNotFoundException {
 		List<Bookingdto> bookingList = bservice.showAllBooking();
 		if (bookingList != null) {
@@ -37,6 +38,7 @@ public class BookingController {
 	}
 
 	@GetMapping("/bookingbyid/{id}")
+	//@PreAuthorize("hasAuthority('user')")
 	public ResponseEntity<Object> getBooking(@PathVariable("id") Integer bookingId) throws BookingNotFoundException {
 		boolean isBookingExist = bservice.isBookingExist(bookingId);
 		if (isBookingExist) {
@@ -54,6 +56,7 @@ public class BookingController {
 	}
 
 	@PutMapping("/update/{id}")
+	//@PreAuthorize("hasAuthority('user')")
 	public ResponseEntity<Object> updateBooking(@PathVariable(value = "id") Integer bookingId,
 			@RequestBody Bookingdto booking) throws BookingNotFoundException {
 		boolean isBookingExist = bservice.isBookingExist(bookingId);
@@ -66,6 +69,7 @@ public class BookingController {
 	}
 
 	@DeleteMapping("/delete/{id}")
+	//@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Object> deleteBooking(@PathVariable(value = "id") Integer bookingId)
 			throws BookingNotFoundException {
 		boolean isBookingExist = bservice.isBookingExist(bookingId);

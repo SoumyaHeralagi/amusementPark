@@ -2,6 +2,7 @@ package com.cg.park.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cg.park.converter.UserConverter;
@@ -17,6 +18,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserConverter converter;
+	
+	 @Autowired
+	 private PasswordEncoder passwordEncoder;
+	 
 
 	@Override
 	public List<UserRequest> showAllUsers() {
@@ -32,6 +37,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserRequest addUser(UserRequest userReq) {
+		userReq.setPassword(passwordEncoder.encode(userReq.getPassword()));
 		User user = converter.convertDtoToEntity(userReq);
 		user = urep.save(user);
 		return converter.convertEntityToDto(user);
@@ -72,8 +78,8 @@ public class UserServiceImpl implements UserService {
 	public boolean isUserExist(Integer userId) {
 		return urep.existsById(userId);
 	}
-	
-	}
+
+}
 
 
 	

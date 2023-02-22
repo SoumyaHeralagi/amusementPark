@@ -26,25 +26,25 @@ public class Booking {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "bookingId")
+	@Column(name = "booking_id")
 	private Integer bookingId;
 
-	@Column(name = "bookedDate")
+	@Column(name = "booked_date")
 	private Date bookedDate;
 	
-	@Column(name = "rideName")
+	@Column(name = "ride_name")
 	private String rideName;
 
-	@Column(name = "rideType")
+	@Column(name = "ride_type")
 	private String rideType;
 
-	@Column(name = "price")
+	@Column(name = "cost")
 	private Long price;
 	
 	@ManyToMany
 	@JoinTable(name="booking_user",
-	joinColumns=@JoinColumn(name="booking_id",referencedColumnName = "bookingId"),
-	inverseJoinColumns=@JoinColumn(name="user_id",referencedColumnName = "userId"))
+	joinColumns=@JoinColumn(name="bookings_id",referencedColumnName = "booking_id"),
+	inverseJoinColumns=@JoinColumn(name="users_id",referencedColumnName = "user_id"))
 	private Set<User> user;
 
 	public Booking() {

@@ -1,6 +1,7 @@
 package com.cg.park.converter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -18,7 +19,6 @@ public class UserConverter {
 
 	public UserRequest convertEntityToDto(User user) {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-		//UserRequest userReq = modelMapper.map(user, UserRequest.class);
 		return modelMapper.map(user, UserRequest.class);
 	}
 
@@ -36,6 +36,11 @@ public class UserConverter {
 	public List<User> convertDtoToEntity(List<UserRequest> dto)
 	{
 		return dto.stream().map(x -> convertDtoToEntity(x)).collect(Collectors.toList());
+	}
+
+	public UserRequest convertEntityToDto(Optional<User> user) {
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+		return modelMapper.map(user, UserRequest.class);
 	}
 
 

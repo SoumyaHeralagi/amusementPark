@@ -23,20 +23,23 @@ import lombok.NoArgsConstructor;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "userId", nullable = false)
+	@Column(name = "user_id", nullable = false)
 	private Integer userId;
 
-	@Column(name = "name", nullable = false)
+	@Column(name = "Name", nullable = false)
 	private String name;
 
-	@Column(name = "age", nullable = false)
+	@Column(name = "Age", nullable = false)
 	private Integer age;
 
-	@Column(name = "email", nullable = false)
+	@Column(name = "emailId", nullable = false)
 	private String email;
 
-	@Column(name = "password", nullable = false)
+	@Column(name = "Password", nullable = false)
 	private String password;
+	
+	@Column(name = "Role", nullable = false)
+	private String role;
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "user")
@@ -45,16 +48,6 @@ public class User {
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public User(Integer userId, String name, Integer age, String email, String password, Set<Booking> bookings) {
-		super();
-		this.userId = userId;
-		this.name = name;
-		this.age = age;
-		this.email = email;
-		this.password = password;
-		this.bookings = bookings;
 	}
 
 	public Integer getUserId() {
@@ -97,6 +90,14 @@ public class User {
 		this.password = password;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public Set<Booking> getBookings() {
 		return bookings;
 	}
@@ -105,11 +106,24 @@ public class User {
 		this.bookings = bookings;
 	}
 
+	public User(Integer userId, String name, Integer age, String email, String password, String role,
+			Set<Booking> bookings) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.age = age;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.bookings = bookings;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", age=" + age + ", email=" + email + ", password="
-				+ password + ", bookings=" + bookings + "]";
+				+ password + ", role=" + role + ", bookings=" + bookings + "]";
 	}
+	
 
 	
 	

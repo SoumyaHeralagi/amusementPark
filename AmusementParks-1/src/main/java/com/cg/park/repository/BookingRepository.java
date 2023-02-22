@@ -7,5 +7,5 @@ import com.cg.park.model.Booking;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-
+	
 }

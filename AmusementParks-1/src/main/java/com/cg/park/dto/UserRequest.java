@@ -1,8 +1,10 @@
 package com.cg.park.dto;
 
+import java.util.Optional;
 import java.util.Set;
 
 import com.cg.park.model.Booking;
+import com.cg.park.model.User;
 import com.cg.park.password.Password;
 
 import jakarta.validation.constraints.NotNull;
@@ -29,8 +31,27 @@ public class UserRequest {
 	
 	@Password
 	private String password;
+	
+	private String role;
 
 	private Set<Booking> booking;
+
+	public UserRequest() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserRequest(@NotNull Integer userId, @NotNull String name, @NotNull Integer age, @NotNull String email,
+			String password, String role, Set<Booking> booking) {
+		super();
+		this.userId = userId;
+		this.name = name;
+		this.age = age;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.booking = booking;
+	}
 
 	public Integer getUserId() {
 		return userId;
@@ -72,6 +93,14 @@ public class UserRequest {
 		this.password = password;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public Set<Booking> getBooking() {
 		return booking;
 	}
@@ -80,27 +109,13 @@ public class UserRequest {
 		this.booking = booking;
 	}
 
-	public UserRequest() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public UserRequest(@NotNull Integer userId, @NotNull String name, @NotNull Integer age, @NotNull String email,
-			String password, Set<Booking> booking) {
-		super();
-		this.userId = userId;
-		this.name = name;
-		this.age = age;
-		this.email = email;
-		this.password = password;
-		this.booking = booking;
-	}
-
 	@Override
 	public String toString() {
 		return "UserRequest [userId=" + userId + ", name=" + name + ", age=" + age + ", email=" + email + ", password="
-				+ password + ", booking=" + booking + "]";
+				+ password + ", role=" + role + ", booking=" + booking + "]";
 	}
+
 	
+
 	
 }
