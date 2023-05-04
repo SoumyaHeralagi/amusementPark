@@ -1,1 +1,0 @@
-# amusementPark with security config
